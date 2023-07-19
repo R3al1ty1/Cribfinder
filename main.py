@@ -1,4 +1,15 @@
 from flask import Flask, render_template
+from scrapes import cianMain
+import psycopg2
+import consts
+
+conn = psycopg2.connect(
+    host="localhost",
+    database="CribFinderDB",
+    user=consts.user,
+    port=consts.port,
+    password=consts.password
+)
 
 app = Flask(__name__)
 
