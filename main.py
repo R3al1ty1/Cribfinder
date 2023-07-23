@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-from scrapes import cianMain
+from scrapes import cianCribScrapper
 import psycopg2
 import consts
 
