@@ -5,6 +5,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.firefox.options import Options
 from secrets import geckodriverPath, firefoxProfile
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
 import time
 
 geckodriverLocation = f"{geckodriverPath}" # Location of geckodriver
@@ -22,9 +24,7 @@ def CaptchaPass(parser):
         button = parser.find_element(by=By.CLASS_NAME, value="CheckboxCaptcha-Button")
         button.click()
         time.sleep(1)
-        print('зашло')
     except:
-        (print('кайфуем'))
         return
 
 def yandexCribScanner(url):
@@ -60,13 +60,20 @@ def yandexCribScanner(url):
         return desc
 
     def getOptionalStats():
+        buttons = parser.find_elements(By.CLASS_NAME, value='Link.Link_js_inited.Link_size_unset.Link_theme_islands.OfferCardExpandableData__expandControl--2Jn9c')
+        for button in buttons:
+            button.click()
+        # button_element = WebDriverWait(parser, 10).until(
+        #     EC.presence_of_element_located((By.CLASS_NAME,
+        #                                     "Link.Link_js_inited.Link_size_unset.Link_theme_islands.OfferCardExpandableData__expandControl--2Jn9c"))
+        # )
+        # button_element.click()
         optionsBox = soup.find_all('div', class_='OfferCardDetailsFeatures__container--2URxF')
+        print((len(optionsBox)))
         frstOptions = optionsBox[0].find_all('a', class_='Link Link_js_inited Link_size_l Link_theme_islands Link_view_text OfferCardDetailsFeatures__feature--3YXhs OfferCardFeature__root--1uCzg')
         scndOptions = optionsBox[0].find_all('div', class_='OfferCardDetailsFeatures__feature--3YXhs OfferCardFeature__root--1uCzg')
         lst = frstOptions + scndOptions
         optionsLst = []
-        button = parser.find_element(By.CLASS_NAME,'Link Link_js_inited Link_size_unset Link_theme_islands OfferCardExpandableData__expandControl--2Jn9c')
-        button.click()
         for elem in lst:
             option = elem.find('div', class_='OfferCardFeature__text--3NIwE')
             option = option.text
